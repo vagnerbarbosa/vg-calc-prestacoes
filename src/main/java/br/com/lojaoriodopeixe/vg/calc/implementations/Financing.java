@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 /**
- * Classe para os objetos do tipo Calculator, onde serão contidos os métodos
+ * Classe para os objetos do tipo Financing, onde serão contidos os métodos
  * para o mesmo.
  *
  * @author Vagner Barbosa (contato@vagnerbarbosa.com)
  *
- * @since 07/06/2015
+ * @since 07/09/2015
  *
- * @version 1.1
+ * @version 0.1
  */
 public class Financing {
 
