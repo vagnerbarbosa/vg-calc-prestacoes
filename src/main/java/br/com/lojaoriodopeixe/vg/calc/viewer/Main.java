@@ -125,6 +125,7 @@ public class Main extends javax.swing.JFrame {
         jButton2.setPreferredSize(new java.awt.Dimension(47, 23));
 
         jNumberFormatField4.setEditable(false);
+        jNumberFormatField4.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         jNumberFormatField4.setText("jNumberFormatField1");
         jNumberFormatField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField4.addActionListener(new java.awt.event.ActionListener() {
@@ -137,6 +138,7 @@ public class Main extends javax.swing.JFrame {
         jLabel7.setText("Valor da Entrada Desejada R$");
 
         jNumberFormatField5.setEditable(false);
+        jNumberFormatField5.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
         jNumberFormatField5.setText("jNumberFormatField1");
         jNumberFormatField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField5.addActionListener(new java.awt.event.ActionListener() {
