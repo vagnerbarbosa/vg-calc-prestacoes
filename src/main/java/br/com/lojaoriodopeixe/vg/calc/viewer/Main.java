@@ -1,6 +1,7 @@
 package br.com.lojaoriodopeixe.vg.calc.viewer;
 
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -68,7 +69,6 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Valor do Bem R$");
 
-        jNumberFormatField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jNumberFormatField1.setText("jNumberFormatField1");
         jNumberFormatField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField1.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +95,6 @@ public class Main extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("CET a.a. %");
 
-        jNumberFormatField2.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jNumberFormatField2.setText("jNumberFormatField1");
         jNumberFormatField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField2.addActionListener(new java.awt.event.ActionListener() {
@@ -107,7 +106,6 @@ public class Main extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Valor da Entrada R$");
 
-        jNumberFormatField3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jNumberFormatField3.setText("jNumberFormatField1");
         jNumberFormatField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField3.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +125,6 @@ public class Main extends javax.swing.JFrame {
         jButton2.setPreferredSize(new java.awt.Dimension(47, 23));
 
         jNumberFormatField4.setEditable(false);
-        jNumberFormatField4.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jNumberFormatField4.setText("jNumberFormatField1");
         jNumberFormatField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField4.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +137,6 @@ public class Main extends javax.swing.JFrame {
         jLabel7.setText("Valor da Entrada Desejada R$");
 
         jNumberFormatField5.setEditable(false);
-        jNumberFormatField5.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jNumberFormatField5.setText("jNumberFormatField1");
         jNumberFormatField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jNumberFormatField5.addActionListener(new java.awt.event.ActionListener() {
@@ -153,6 +149,11 @@ public class Main extends javax.swing.JFrame {
         jLabel8.setText("Valor da Parcela Desejada R$");
 
         jButton3.setText("Calculo Reverso");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -267,8 +268,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel7.getAccessibleContext().setAccessibleName("Valor da Entrada Desejada R$");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -308,6 +307,10 @@ public class Main extends javax.swing.JFrame {
     private void jNumberFormatField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jNumberFormatField5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jNumberFormatField5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        JOptionPane.showMessageDialog(null, "Função ainda não implementada!");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
