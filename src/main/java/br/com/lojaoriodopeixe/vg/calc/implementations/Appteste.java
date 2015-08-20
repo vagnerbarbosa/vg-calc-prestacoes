@@ -6,7 +6,9 @@
 package br.com.lojaoriodopeixe.vg.calc.implementations;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -14,7 +16,7 @@ import java.util.Date;
  */
 public class Appteste {
     
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Financing c = new Financing();
         
         for (int i = 1; i < 10; i++) {
@@ -24,8 +26,8 @@ public class Appteste {
         }
             
         }
-        
-        System.out.println(c.getCET(1000d, 5d, 10, new Date(), new Date()));
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        System.out.println(c.getCET(51516.515168d, 0.05d, 24, df.parse("01/01/2012"), df.parse("01/02/2012")));
         
         
     }

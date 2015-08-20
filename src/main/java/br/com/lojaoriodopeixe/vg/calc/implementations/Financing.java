@@ -42,7 +42,7 @@ public class Financing {
     /**
      * Calculo do custo efetivo total anual.
      *
-     * @param fc0 FC0, valor financiado.
+     * @param fc0 FC0, valor a ser financiado.
      * @param fcj FCj, Percentual de juros a que se sujeira o valor presente
      * @param n N, número de parcelas mensais
      * @param d0 D0 data do contrato (liberacao de recursos)
