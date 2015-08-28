@@ -1,6 +1,7 @@
 package br.com.lojaoriodopeixe.vg.calc.implementations;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
@@ -34,9 +35,9 @@ public class Financing {
     **/
     public BigDecimal getInstalment(Double value, Double interest, Integer months, Double inputValue) {
         double realValue = value - inputValue;        
-        realValue = (realValue * (interest / 100)) / (1 - (1 / Math.pow(1+(interest/100), months)));        
+        realValue = realValue/((Math.pow((interest/100)+1, months)-1)/(Math.pow((interest/100)+1, months)*(interest/100)));        
         BigDecimal preciseValue = new BigDecimal(realValue);
-        return preciseValue.setScale(2, RoundingMode.HALF_UP);
+        return preciseValue.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
     
     /**

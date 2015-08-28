@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 /**
  * Classe contendo métodos que são úteis em determinadas partes do projeto
@@ -58,5 +59,12 @@ public class Utils {
         conj.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
         frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
     }
+    
+    public void nextFieldWithEnter2(JTextField frame) {
+        // Colocando enter para pular de campo
+        HashSet conj = new HashSet(frame.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
+        conj.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
+        frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
+    }    
 
 }
