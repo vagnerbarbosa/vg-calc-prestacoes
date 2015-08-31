@@ -18,7 +18,9 @@ public class Appteste {
     
     public static void main(String[] args) throws ParseException {
         Financing c = new Financing();
+        System.out.println(c.getRealCET(2.92));
         
+      
         //double resultado = c.getInstalment(1200.0, 3.0, 2, 1180.0);
         //System.out.println(resultado);
         

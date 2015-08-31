@@ -40,6 +40,13 @@ public class Financing {
         return preciseValue.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
     
+    public BigDecimal getRealCET(double interest) {
+        double result = 0;
+        result = (Math.pow(1 + (interest / 100), 12) - 1) * 100;
+        BigDecimal preciseValue = new BigDecimal(result);
+        return preciseValue.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }
+    
     /**
      * Calculo do custo efetivo total anual.
      *

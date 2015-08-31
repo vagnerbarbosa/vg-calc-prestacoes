@@ -143,7 +143,7 @@ public class JNumberFormatField extends JTextField {
    * @param zeros
    * @return
    */
-  private static final String makeZeros(int zeros) {
+  private static String makeZeros(int zeros) {
     if (zeros >= 0) {
       StringBuilder builder = new StringBuilder();
 

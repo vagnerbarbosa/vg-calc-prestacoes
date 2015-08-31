@@ -4,6 +4,8 @@ import br.com.lojaoriodopeixe.vg.calc.implementations.Financing;
 import br.com.lojaoriodopeixe.vg.calc.implementations.FuncTableModel;
 import br.com.lojaoriodopeixe.vg.calc.implementations.Parcela;
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
+import java.awt.Color;
+import java.awt.Component;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -12,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -21,15 +26,21 @@ import javax.swing.JOptionPane;
 public class Main extends javax.swing.JFrame {
 
     FuncTableModel f = new FuncTableModel();
-                Locale locBrazil = new Locale("pt", "BR");
-                NumberFormat nfValue = NumberFormat.getInstance(locBrazil);
-                NumberFormat nfInterest = NumberFormat.getInstance(locBrazil);
-                NumberFormat nfIputValue = NumberFormat.getInstance(locBrazil);
-                NumberFormat nfOldIputValue = NumberFormat.getInstance(locBrazil);
-                Number nValue = null;
-                Number nInterest = null;
-                Number nInputValue = null;    
-                Number nOldInputValue = null;
+    Locale locBrazil = new Locale("pt", "BR");
+    NumberFormat nfValue = NumberFormat.getInstance(locBrazil);
+    NumberFormat nfInterest = NumberFormat.getInstance(locBrazil);
+    NumberFormat nfIputValue = NumberFormat.getInstance(locBrazil);
+    NumberFormat nfOldIputValue = NumberFormat.getInstance(locBrazil);
+    Number nValue = null;
+    Number nInterest = null;
+    Number nInputValue = null;
+    Number nOldInputValue = null;
+    Financing c = new Financing();
+
+    Double inputValue = 0d;
+    Integer months = 0;
+    Double interest = 0d;
+    Double value = 0d;
 
     /**
      * Creates new form Main
@@ -39,6 +50,13 @@ public class Main extends javax.swing.JFrame {
         util.centerWindow(this);
     }
     Utils util = new Utils();
+
+    public int exitSystem() {
+        if (javax.swing.JOptionPane.showConfirmDialog(this, "Tem certeza que deseja sair?", "Calculadora de Prestações", javax.swing.JOptionPane.YES_NO_OPTION) == 0) {
+            this.dispose();
+        }
+        return 1;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,289 +90,352 @@ public class Main extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        jTable3 = new javax.swing.JTable() {
+            public Component prepareRenderer(TableCellRenderer renderer,
+                int rowIndex, int vColIndex) {
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable2);
+                Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
+                if (months > 9) {
+                    // altera a cor de background da linha para vermelho e foreground para branco
+                    // quando o valor da coluna 3 for igual a fechado
+                    if (jTable3.getValueAt(rowIndex, 0).toString().equals(months + "ª Parcela")) {
+                        c.setBackground(new Color(192, 0, 0));
+                        c.setForeground(Color.white);
+                    } else {
+                        // mantem a cor padrão de foreground
+                        c.setForeground(getForeground());
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cálculo de Prestações (Financiamento)");
-        setAlwaysOnTop(true);
-        setResizable(false);
+                        // determina a cor de background da linha selecionada
+                        if (isCellSelected(rowIndex, vColIndex)) {
+                            c.setBackground(new Color(184, 207, 229));
+                        } else {
+                            // linhas não selecionadas, manter cor de background padrão
+                            c.setBackground(getBackground());
+                        }
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Valor do Bem R$");
+                    }
+                } else {// altera a cor de background da linha para vermelho e foreground para branco
+                    // quando o valor da coluna 3 for igual a fechado
+                    if (jTable3.getValueAt(rowIndex, 0).toString().equals("0" + months + "ª Parcela"
 
-        ValorBemjNumberFormatField.setText("0,01");
-        ValorBemjNumberFormatField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        ValorBemjNumberFormatField.setValue(new BigDecimal(0));
-        ValorBemjNumberFormatField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ValorBemjNumberFormatFieldActionPerformed(evt);
-            }
-        });
-        ValorBemjNumberFormatField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                ValorBemjNumberFormatFieldKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ValorBemjNumberFormatFieldKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                ValorBemjNumberFormatFieldKeyTyped(evt);
-            }
-        });
+                    )) {
+                        c.setBackground(new Color(192, 0, 0));
+                        c.setForeground(Color.white);
+                    }else {
+                        // mantem a cor padrão de foreground
+                        c.setForeground(getForeground());
 
-        TotalParcelasjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        TotalParcelasjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        TotalParcelasjTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TotalParcelasjTextFieldActionPerformed(evt);
-            }
-        });
-        TotalParcelasjTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                TotalParcelasjTextFieldKeyTyped(evt);
-            }
-        });
+                        // determina a cor de background da linha selecionada
+                        if (isCellSelected(rowIndex, vColIndex)) {
+                            c.setBackground(new Color(184, 207, 229));
+                        } else {
+                            // linhas não selecionadas, manter cor de background padrão
+                            c.setBackground(getBackground());
+                        }}}
+                        return c;}}
+                ;
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Total de Parcelas");
+                jTable2.setModel(new javax.swing.table.DefaultTableModel(
+                    new Object [][] {
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null},
+                        {null, null, null, null}
+                    },
+                    new String [] {
+                        "Title 1", "Title 2", "Title 3", "Title 4"
+                    }
+                ));
+                jScrollPane1.setViewportView(jTable2);
 
-        JurosjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        JurosjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        JurosjTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JurosjTextFieldActionPerformed(evt);
-            }
-        });
+                setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                setTitle("Cálculo de Prestações (Financiamento)");
+                setAlwaysOnTop(true);
+                setResizable(false);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Juros ao Mês");
+                jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel1.setText("Valor do Bem R$");
 
-        jTextField3.setEditable(false);
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField3.setFocusable(false);
+                ValorBemjNumberFormatField.setText("0,01");
+                ValorBemjNumberFormatField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                ValorBemjNumberFormatField.setValue(new BigDecimal(0));
+                ValorBemjNumberFormatField.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusGained(java.awt.event.FocusEvent evt) {
+                        ValorBemjNumberFormatFieldFocusGained(evt);
+                    }
+                });
+                ValorBemjNumberFormatField.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        ValorBemjNumberFormatFieldActionPerformed(evt);
+                    }
+                });
+                ValorBemjNumberFormatField.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        ValorBemjNumberFormatFieldKeyPressed(evt);
+                    }
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        ValorBemjNumberFormatFieldKeyReleased(evt);
+                    }
+                    public void keyTyped(java.awt.event.KeyEvent evt) {
+                        ValorBemjNumberFormatFieldKeyTyped(evt);
+                    }
+                });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("CET a.a. %");
+                TotalParcelasjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                TotalParcelasjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+                TotalParcelasjTextField.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        TotalParcelasjTextFieldActionPerformed(evt);
+                    }
+                });
+                TotalParcelasjTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyTyped(java.awt.event.KeyEvent evt) {
+                        TotalParcelasjTextFieldKeyTyped(evt);
+                    }
+                });
 
-        ValorEntradajNumberFormatField2.setText("jNumberFormatField1");
-        ValorEntradajNumberFormatField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        ValorEntradajNumberFormatField2.setValue(new BigDecimal(0));
-        ValorEntradajNumberFormatField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ValorEntradajNumberFormatField2ActionPerformed(evt);
-            }
-        });
-        ValorEntradajNumberFormatField2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                ValorEntradajNumberFormatField2KeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ValorEntradajNumberFormatField2KeyReleased(evt);
-            }
-        });
+                jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel2.setText("Total de Parcelas");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Valor da Entrada R$");
+                JurosjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                JurosjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+                JurosjTextField.setPreferredSize(new java.awt.Dimension(6, 26));
+                JurosjTextField.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        JurosjTextFieldActionPerformed(evt);
+                    }
+                });
+                JurosjTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        JurosjTextFieldKeyReleased(evt);
+                    }
+                });
 
-        ValorFinanciarNumberFormatField3.setText("jNumberFormatField1");
-        ValorFinanciarNumberFormatField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        ValorFinanciarNumberFormatField3.setValue(new BigDecimal(0));
-        ValorFinanciarNumberFormatField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ValorFinanciarNumberFormatField3ActionPerformed(evt);
-            }
-        });
-        ValorFinanciarNumberFormatField3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                ValorFinanciarNumberFormatField3KeyPressed(evt);
-            }
-        });
+                jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel3.setText("Juros ao Mês");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Valor a Financiar R$");
+                jTextField3.setEditable(false);
+                jTextField3.setBackground(new java.awt.Color(255, 255, 255));
+                jTextField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                jTextField3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+                jTextField3.setFocusable(false);
 
-        jButton1.setLabel("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+                jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel4.setText("CET a.a. %");
 
-        jButton2.setLabel("Sair");
-        jButton2.setMaximumSize(new java.awt.Dimension(47, 23));
-        jButton2.setMinimumSize(new java.awt.Dimension(47, 23));
-        jButton2.setPreferredSize(new java.awt.Dimension(47, 23));
+                ValorEntradajNumberFormatField2.setText("jNumberFormatField1");
+                ValorEntradajNumberFormatField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                ValorEntradajNumberFormatField2.setValue(new BigDecimal(0));
+                ValorEntradajNumberFormatField2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        ValorEntradajNumberFormatField2ActionPerformed(evt);
+                    }
+                });
+                ValorEntradajNumberFormatField2.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        ValorEntradajNumberFormatField2KeyPressed(evt);
+                    }
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        ValorEntradajNumberFormatField2KeyReleased(evt);
+                    }
+                });
 
-        jNumberFormatField4.setEditable(false);
-        jNumberFormatField4.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
-        jNumberFormatField4.setText("jNumberFormatField1");
-        jNumberFormatField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jNumberFormatField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jNumberFormatField4ActionPerformed(evt);
-            }
-        });
+                jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel5.setText("Valor da Entrada R$");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Valor da Entrada Desejada R$");
+                ValorFinanciarNumberFormatField3.setText("jNumberFormatField1");
+                ValorFinanciarNumberFormatField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                ValorFinanciarNumberFormatField3.setValue(new BigDecimal(0));
+                ValorFinanciarNumberFormatField3.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        ValorFinanciarNumberFormatField3ActionPerformed(evt);
+                    }
+                });
+                ValorFinanciarNumberFormatField3.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        ValorFinanciarNumberFormatField3KeyPressed(evt);
+                    }
+                });
 
-        jNumberFormatField5.setEditable(false);
-        jNumberFormatField5.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
-        jNumberFormatField5.setText("jNumberFormatField1");
-        jNumberFormatField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jNumberFormatField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jNumberFormatField5ActionPerformed(evt);
-            }
-        });
+                jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel6.setText("Valor a Financiar R$");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setText("Valor da Parcela Desejada R$");
+                jButton1.setBackground(new java.awt.Color(51, 102, 255));
+                jButton1.setLabel("OK");
+                jButton1.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton1ActionPerformed(evt);
+                    }
+                });
 
-        jButton3.setText("Calculo Reverso");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+                jButton2.setBackground(new java.awt.Color(255, 51, 51));
+                jButton2.setLabel("Sair");
+                jButton2.setMaximumSize(new java.awt.Dimension(47, 23));
+                jButton2.setMinimumSize(new java.awt.Dimension(47, 23));
+                jButton2.setPreferredSize(new java.awt.Dimension(47, 23));
+                jButton2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton2ActionPerformed(evt);
+                    }
+                });
 
-        jTable3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTable3.setModel(f);
-        jTable3.setRowHeight(23);
-        jScrollPane3.setViewportView(jTable3);
+                jNumberFormatField4.setEditable(false);
+                jNumberFormatField4.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+                jNumberFormatField4.setText("jNumberFormatField1");
+                jNumberFormatField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                jNumberFormatField4.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jNumberFormatField4ActionPerformed(evt);
+                    }
+                });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3)
+                jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel7.setText("Valor da Entrada Desejada R$");
+
+                jNumberFormatField5.setEditable(false);
+                jNumberFormatField5.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
+                jNumberFormatField5.setText("jNumberFormatField1");
+                jNumberFormatField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                jNumberFormatField5.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jNumberFormatField5ActionPerformed(evt);
+                    }
+                });
+
+                jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel8.setText("Valor da Parcela Desejada R$");
+
+                jButton3.setBackground(new java.awt.Color(51, 153, 0));
+                jButton3.setText("Calculo Reverso");
+                jButton3.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        jButton3ActionPerformed(evt);
+                    }
+                });
+
+                jTable3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+                jTable3.setModel(f);
+                jTable3.setRowHeight(23);
+                jScrollPane3.setViewportView(jTable3);
+
+                javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+                jPanel1.setLayout(jPanel1Layout);
+                jPanel1Layout.setHorizontalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jNumberFormatField4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jNumberFormatField5, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(ValorBemjNumberFormatField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(TotalParcelasjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JurosjTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(ValorFinanciarNumberFormatField3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(1, 1, 1)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel4))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(ValorBemjNumberFormatField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel1))
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(TotalParcelasjTextField)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(27, 27, 27)
+                                                .addComponent(jLabel3))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(JurosjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel5)
+                                                .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel7))
+                                            .addComponent(jNumberFormatField4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(10, 10, 10)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jNumberFormatField5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(ValorFinanciarNumberFormatField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addGap(0, 0, Short.MAX_VALUE)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel6)
+                                                        .addGap(1, 1, 1))
+                                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))))))
+                                .addGap(10, 10, 10)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TotalParcelasjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(JurosjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ValorBemjNumberFormatField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap())
+                );
+                jPanel1Layout.setVerticalGroup(
+                    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ValorFinanciarNumberFormatField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TotalParcelasjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(JurosjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ValorBemjNumberFormatField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jNumberFormatField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jNumberFormatField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ValorFinanciarNumberFormatField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jNumberFormatField4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jNumberFormatField5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                getContentPane().setLayout(layout);
+                layout.setHorizontalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                );
+                layout.setVerticalGroup(
+                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+                pack();
+            }// </editor-fold>//GEN-END:initComponents
 
     private void ValorBemjNumberFormatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldActionPerformed
         this.ValorEntradajNumberFormatField2.requestFocusInWindow();
@@ -381,60 +462,41 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         try {
             nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
             nInterest = nfInterest.parse(JurosjTextField.getText());
             nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
+
+            value = nValue.doubleValue();
+            interest = nInterest.doubleValue();
+            months = Integer.parseInt(TotalParcelasjTextField.getText());
+            inputValue = nInputValue.doubleValue();
+
+            List<Parcela> parcelas = new ArrayList<>();
+
+            System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
+
+            for (int i = 0; i < months * 2; ++i) {
+                Parcela parcela = new Parcela();
+                if (i > 1) {
+                    DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+                    if (i < 10) {
+                        parcela.setNumero("0" + i + "ª Parcela");
+                    } else {
+                        parcela.setNumero(i + "ª Parcela");
+                    }
+                    parcela.setParcela(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d))));
+                    parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(inputValue)))));
+                    parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
+                    parcelas.add(parcela);
+                } 
+            }
+            f.limpar();
+            f.addListaDeParcelas(parcelas);
+        } catch (ParseException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Um ou mais valores não informados ou incompatíveis!", "Atenção!", 2);
             System.out.println(ex.getMessage());
         }
-        Double value = nValue.doubleValue();
-        Double interest = nInterest.doubleValue();
-        Integer months = Integer.parseInt(TotalParcelasjTextField.getText());
-        Double inputValue = nInputValue.doubleValue();
-
-        Financing c = new Financing();
-        
-        List<Parcela> parcelas = new ArrayList<>();
-
-        System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
-        if (months <= 15) {
-        for (int i = 0; i < 16; ++i) {
-            Parcela parcela = new Parcela();
-            if (i > 1) {
-                DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00"); 
-                if (i < 10) {
-                parcela.setNumero("0" + i + "ª Parcela");
-                } else {
-                parcela.setNumero(i + "ª Parcela");
-                }                
-                parcela.setParcela(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d))));
-                parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(inputValue)))));
-                parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
-                parcelas.add(parcela);
-            }
-        }
-        } else {
-        for (int i = 0; i < months+1; ++i) {
-            Parcela parcela = new Parcela();
-            if (i > 1) {
-                DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00"); 
-                if (i < 10) {
-                parcela.setNumero("0" + i + "ª Parcela");
-                } else {
-                parcela.setNumero(i + "ª Parcela");
-                }                
-                parcela.setParcela(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d))));
-                parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
-                parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)))));
-                parcelas.add(parcela);
-            }
-        }            
-        }
-        f.limpar();
-        f.addListaDeParcelas(parcelas);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ValorBemjNumberFormatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyPressed
@@ -454,6 +516,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyTyped
 
     private void ValorBemjNumberFormatFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyReleased
+
         try {
             nInputValue = nfIputValue.parse(ValorBemjNumberFormatField.getText());
             nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
@@ -461,16 +524,16 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
             System.out.println(ex.getMessage());
         }
-        Double bem = nInputValue.doubleValue();        
+        Double bem = nInputValue.doubleValue();
         Double financiamento = nValue.doubleValue();
         Double realValue = null;
-        if (!Objects.equals(bem, financiamento)){
-        realValue = bem + 0;
+        if (!Objects.equals(bem, financiamento)) {
+            realValue = bem + 0;
         } else {
-        realValue = financiamento + 0;
+            realValue = financiamento + 0;
         }
         DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
-        
+
         ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));
     }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyReleased
 
@@ -484,23 +547,23 @@ public class Main extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
         DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
-        Double entrada = nInputValue.doubleValue();        
+        Double entrada = nInputValue.doubleValue();
         Double financiamento = nValue.doubleValue();
-        if (entrada >= financiamento) {
+        if (entrada > financiamento) {
             JOptionPane.showMessageDialog(this, "Valor da entrada é maior ou igual ao Financiamento!", "Atenção!", 2);
             Double aux = nOldInputValue.doubleValue();
             ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(aux)));
             ValorEntradajNumberFormatField2.setText("");
-        } 
-        Double realValue = financiamento - entrada;                
-        ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));               
+        }
+        Double realValue = financiamento - entrada;
+        ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));
     }//GEN-LAST:event_ValorEntradajNumberFormatField2KeyReleased
 
     private void TotalParcelasjTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TotalParcelasjTextFieldKeyTyped
-    String caracteres="0987654321";
-    if(!caracteres.contains(evt.getKeyChar()+"")){
-    evt.consume();
-    }
+        String caracteres = "0987654321";
+        if (!caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
     }//GEN-LAST:event_TotalParcelasjTextFieldKeyTyped
 
     private void TotalParcelasjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TotalParcelasjTextFieldActionPerformed
@@ -510,6 +573,29 @@ public class Main extends javax.swing.JFrame {
     private void JurosjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JurosjTextFieldActionPerformed
         this.jButton1.requestFocusInWindow();
     }//GEN-LAST:event_JurosjTextFieldActionPerformed
+
+    private void JurosjTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JurosjTextFieldKeyReleased
+        try {
+            if (JurosjTextField.getText() != null) {
+                nInterest = nfInterest.parse(JurosjTextField.getText());
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Double interest = nInterest.doubleValue();
+        if (!"0,00".equals(ValorBemjNumberFormatField.getText())) {
+            jTextField3.setText(String.valueOf(c.getRealCET(interest)).replace(".", ","));
+        }
+
+    }//GEN-LAST:event_JurosjTextFieldKeyReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.exitSystem();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void ValorBemjNumberFormatFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldFocusGained
+        ValorBemjNumberFormatField.selectAll();
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldFocusGained
 
     /**
      * @param args the command line arguments
@@ -540,6 +626,7 @@ public class Main extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Main().setVisible(true);
             }

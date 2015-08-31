@@ -21,7 +21,7 @@ public class ColorCellRenderer extends DefaultTableCellRenderer {
     private static final long serialVersionUID = 433648737270300478L;
     private static final Log log = LogFactory.getLog(ColorCellRenderer.class);
     private int row = -1;
-    private Color color;
+    private final Color color;
 
     public ColorCellRenderer(Color color, int row) {
         super();
@@ -47,9 +47,11 @@ public class ColorCellRenderer extends DefaultTableCellRenderer {
 
     }
 
+    @Override
     public void validate() {
     }
 
+    @Override
     public void revalidate() {
     }
 
