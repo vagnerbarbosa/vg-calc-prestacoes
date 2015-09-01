@@ -587,8 +587,11 @@ public class Main extends javax.swing.JFrame {
 //            financiamento = 0d;
 //            
 //        }
+        
+        if (entrada > 0) {
         Double realValue = financiamento - entrada;
         ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));
+        }
     }//GEN-LAST:event_ValorEntradajNumberFormatField2KeyReleased
 
     private void ValorBemjNumberFormatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyPressed
