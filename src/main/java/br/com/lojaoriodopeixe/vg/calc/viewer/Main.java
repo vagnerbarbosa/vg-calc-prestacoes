@@ -3,6 +3,7 @@ package br.com.lojaoriodopeixe.vg.calc.viewer;
 import br.com.lojaoriodopeixe.vg.calc.implementations.Financing;
 import br.com.lojaoriodopeixe.vg.calc.implementations.FuncTableModel;
 import br.com.lojaoriodopeixe.vg.calc.implementations.Parcela;
+import br.com.lojaoriodopeixe.vg.calc.utils.DecimalFormattedField;
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 
@@ -47,7 +46,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        util.centerWindow(this);
+        util.centerWindow(this);        
     }
     Utils util = new Utils();
 
@@ -71,14 +70,12 @@ public class Main extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        ValorBemjNumberFormatField = new br.com.lojaoriodopeixe.vg.calc.utils.JNumberFormatField();
-        TotalParcelasjTextField = new javax.swing.JTextField();
+        TotalParcelasjTextField = new DecimalFormattedField(DecimalFormattedField.NUMERO);
         jLabel2 = new javax.swing.JLabel();
-        JurosjTextField = new javax.swing.JTextField();
+        JurosjTextField = new DecimalFormattedField(DecimalFormattedField.PORCENTAGEM);
         jLabel3 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        ValorEntradajNumberFormatField2 = new br.com.lojaoriodopeixe.vg.calc.utils.JNumberFormatField();
         jLabel5 = new javax.swing.JLabel();
         ValorFinanciarNumberFormatField3 = new br.com.lojaoriodopeixe.vg.calc.utils.JNumberFormatField();
         jLabel6 = new javax.swing.JLabel();
@@ -134,6 +131,8 @@ public class Main extends javax.swing.JFrame {
                         }}}
                         return c;}}
                 ;
+                ValorBemjNumberFormatField = new DecimalFormattedField(DecimalFormattedField.REAL);
+                ValorEntradajNumberFormatField2 = new DecimalFormattedField(DecimalFormattedField.REAL);
 
                 jTable2.setModel(new javax.swing.table.DefaultTableModel(
                     new Object [][] {
@@ -156,33 +155,9 @@ public class Main extends javax.swing.JFrame {
                 jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
                 jLabel1.setText("Valor do Bem R$");
 
-                ValorBemjNumberFormatField.setText("0,01");
-                ValorBemjNumberFormatField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-                ValorBemjNumberFormatField.setValue(new BigDecimal(0));
-                ValorBemjNumberFormatField.addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusGained(java.awt.event.FocusEvent evt) {
-                        ValorBemjNumberFormatFieldFocusGained(evt);
-                    }
-                });
-                ValorBemjNumberFormatField.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        ValorBemjNumberFormatFieldActionPerformed(evt);
-                    }
-                });
-                ValorBemjNumberFormatField.addKeyListener(new java.awt.event.KeyAdapter() {
-                    public void keyPressed(java.awt.event.KeyEvent evt) {
-                        ValorBemjNumberFormatFieldKeyPressed(evt);
-                    }
-                    public void keyReleased(java.awt.event.KeyEvent evt) {
-                        ValorBemjNumberFormatFieldKeyReleased(evt);
-                    }
-                    public void keyTyped(java.awt.event.KeyEvent evt) {
-                        ValorBemjNumberFormatFieldKeyTyped(evt);
-                    }
-                });
-
                 TotalParcelasjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                 TotalParcelasjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+                TotalParcelasjTextField.setToolTipText("");
                 TotalParcelasjTextField.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         TotalParcelasjTextFieldActionPerformed(evt);
@@ -221,24 +196,7 @@ public class Main extends javax.swing.JFrame {
                 jTextField3.setFocusable(false);
 
                 jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-                jLabel4.setText("CET a.a. %");
-
-                ValorEntradajNumberFormatField2.setText("jNumberFormatField1");
-                ValorEntradajNumberFormatField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-                ValorEntradajNumberFormatField2.setValue(new BigDecimal(0));
-                ValorEntradajNumberFormatField2.addActionListener(new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent evt) {
-                        ValorEntradajNumberFormatField2ActionPerformed(evt);
-                    }
-                });
-                ValorEntradajNumberFormatField2.addKeyListener(new java.awt.event.KeyAdapter() {
-                    public void keyPressed(java.awt.event.KeyEvent evt) {
-                        ValorEntradajNumberFormatField2KeyPressed(evt);
-                    }
-                    public void keyReleased(java.awt.event.KeyEvent evt) {
-                        ValorEntradajNumberFormatField2KeyReleased(evt);
-                    }
-                });
+                jLabel4.setText("CET* a.a. %");
 
                 jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
                 jLabel5.setText("Valor da Entrada R$");
@@ -318,6 +276,46 @@ public class Main extends javax.swing.JFrame {
                 jTable3.setRowHeight(23);
                 jScrollPane3.setViewportView(jTable3);
 
+                ValorBemjNumberFormatField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                ValorBemjNumberFormatField.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusGained(java.awt.event.FocusEvent evt) {
+                        ValorBemjNumberFormatFieldFocusGained(evt);
+                    }
+                });
+                ValorBemjNumberFormatField.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        ValorBemjNumberFormatFieldActionPerformed(evt);
+                    }
+                });
+                ValorBemjNumberFormatField.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        ValorBemjNumberFormatFieldKeyPressed(evt);
+                    }
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        ValorBemjNumberFormatFieldKeyReleased(evt);
+                    }
+                    public void keyTyped(java.awt.event.KeyEvent evt) {
+                        ValorBemjNumberFormatFieldKeyTyped(evt);
+                    }
+                });
+
+                ValorEntradajNumberFormatField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                ValorEntradajNumberFormatField2.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusGained(java.awt.event.FocusEvent evt) {
+                        ValorEntradajNumberFormatField2FocusGained(evt);
+                    }
+                });
+                ValorEntradajNumberFormatField2.addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        ValorEntradajNumberFormatField2ActionPerformed(evt);
+                    }
+                });
+                ValorEntradajNumberFormatField2.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        ValorEntradajNumberFormatField2KeyReleased(evt);
+                    }
+                });
+
                 javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
                 jPanel1.setLayout(jPanel1Layout);
                 jPanel1Layout.setHorizontalGroup(
@@ -329,9 +327,11 @@ public class Main extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(ValorBemjNumberFormatField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel1))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(112, 112, 112)
+                                                .addComponent(jLabel1))
+                                            .addComponent(ValorBemjNumberFormatField))
                                         .addGap(10, 10, 10)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(TotalParcelasjTextField)
@@ -344,12 +344,14 @@ public class Main extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(JurosjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel5)
-                                                .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel7))
-                                            .addComponent(jNumberFormatField4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(22, 22, 22)
+                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel5)
+                                                    .addComponent(jLabel7)))
+                                            .addComponent(jNumberFormatField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.Alignment.TRAILING))
                                         .addGap(10, 10, 10)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jNumberFormatField5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -384,11 +386,11 @@ public class Main extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TotalParcelasjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TotalParcelasjTextField)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(JurosjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(ValorBemjNumberFormatField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(ValorBemjNumberFormatField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -396,9 +398,9 @@ public class Main extends javax.swing.JFrame {
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(ValorEntradajNumberFormatField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ValorFinanciarNumberFormatField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ValorFinanciarNumberFormatField3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                                    .addComponent(ValorEntradajNumberFormatField2)))
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -437,14 +439,6 @@ public class Main extends javax.swing.JFrame {
                 pack();
             }// </editor-fold>//GEN-END:initComponents
 
-    private void ValorBemjNumberFormatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldActionPerformed
-        this.ValorEntradajNumberFormatField2.requestFocusInWindow();
-    }//GEN-LAST:event_ValorBemjNumberFormatFieldActionPerformed
-
-    private void ValorEntradajNumberFormatField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2ActionPerformed
-        this.TotalParcelasjTextField.requestFocusInWindow();
-    }//GEN-LAST:event_ValorEntradajNumberFormatField2ActionPerformed
-
     private void ValorFinanciarNumberFormatField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorFinanciarNumberFormatField3ActionPerformed
         this.jButton1.requestFocusInWindow();
     }//GEN-LAST:event_ValorFinanciarNumberFormatField3ActionPerformed
@@ -474,7 +468,7 @@ public class Main extends javax.swing.JFrame {
 
             List<Parcela> parcelas = new ArrayList<>();
 
-            System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
+            //System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
 
             for (int i = 0; i < months * 2; ++i) {
                 Parcela parcela = new Parcela();
@@ -499,65 +493,9 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void ValorBemjNumberFormatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyPressed
-
-    }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyPressed
-
-    private void ValorEntradajNumberFormatField2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2KeyPressed
-
-    }//GEN-LAST:event_ValorEntradajNumberFormatField2KeyPressed
-
     private void ValorFinanciarNumberFormatField3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorFinanciarNumberFormatField3KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_ValorFinanciarNumberFormatField3KeyPressed
-
-    private void ValorBemjNumberFormatFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyTyped
-
-    }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyTyped
-
-    private void ValorBemjNumberFormatFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyReleased
-
-        try {
-            nInputValue = nfIputValue.parse(ValorBemjNumberFormatField.getText());
-            nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
-            System.out.println(ex.getMessage());
-        }
-        Double bem = nInputValue.doubleValue();
-        Double financiamento = nValue.doubleValue();
-        Double realValue = null;
-        if (!Objects.equals(bem, financiamento)) {
-            realValue = bem + 0;
-        } else {
-            realValue = financiamento + 0;
-        }
-        DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
-
-        ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));
-    }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyReleased
-
-    private void ValorEntradajNumberFormatField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2KeyReleased
-        try {
-            nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
-            nValue = nfValue.parse(ValorBemjNumberFormatField.getText());
-            nOldInputValue = nfOldIputValue.parse(ValorFinanciarNumberFormatField3.getText());
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
-            System.out.println(ex.getMessage());
-        }
-        DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
-        Double entrada = nInputValue.doubleValue();
-        Double financiamento = nValue.doubleValue();
-        if (entrada > financiamento) {
-            JOptionPane.showMessageDialog(this, "Valor da entrada é maior ou igual ao Financiamento!", "Atenção!", 2);
-            Double aux = nOldInputValue.doubleValue();
-            ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(aux)));
-            ValorEntradajNumberFormatField2.setText("");
-        }
-        Double realValue = financiamento - entrada;
-        ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));
-    }//GEN-LAST:event_ValorEntradajNumberFormatField2KeyReleased
 
     private void TotalParcelasjTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TotalParcelasjTextFieldKeyTyped
         String caracteres = "0987654321";
@@ -577,15 +515,16 @@ public class Main extends javax.swing.JFrame {
     private void JurosjTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JurosjTextFieldKeyReleased
         try {
             if (JurosjTextField.getText() != null) {
-                nInterest = nfInterest.parse(JurosjTextField.getText());
+                nInterest = nfInterest.parse(JurosjTextField.getText());                
             }
-        } catch (ParseException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Double interest = nInterest.doubleValue();
+        Double interest2 = nInterest.doubleValue();
+      
         if (!"0,00".equals(ValorBemjNumberFormatField.getText())) {
-            jTextField3.setText(String.valueOf(c.getRealCET(interest)).replace(".", ","));
+            jTextField3.setText(String.valueOf(c.getRealCET(interest2)).replace(".", ",") + "%");            
         }
+                } catch (ParseException ex) {
+            System.out.println(ex.getMessage());
+        }  
 
     }//GEN-LAST:event_JurosjTextFieldKeyReleased
 
@@ -593,9 +532,76 @@ public class Main extends javax.swing.JFrame {
         this.exitSystem();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void ValorBemjNumberFormatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldActionPerformed
+        this.ValorEntradajNumberFormatField2.requestFocusInWindow();
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldActionPerformed
+
     private void ValorBemjNumberFormatFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldFocusGained
-        ValorBemjNumberFormatField.selectAll();
+        
     }//GEN-LAST:event_ValorBemjNumberFormatFieldFocusGained
+
+    private void ValorBemjNumberFormatFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyReleased
+        try {
+            nInputValue = nfIputValue.parse(ValorBemjNumberFormatField.getText());
+            nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
+        } catch (ParseException ex) {
+            //JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
+            System.out.println(ex.getMessage());
+        }
+        Double bem = nInputValue.doubleValue();
+        Double financiamento = nValue.doubleValue();
+        Double realValue = null;
+        if (!Objects.equals(bem, financiamento)) {
+            realValue = bem + 0;
+        } else {
+            realValue = financiamento + 0;
+        }
+        DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+
+        ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));        
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyReleased
+
+    private void ValorEntradajNumberFormatField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2ActionPerformed
+        this.TotalParcelasjTextField.requestFocusInWindow();
+    }//GEN-LAST:event_ValorEntradajNumberFormatField2ActionPerformed
+
+    private void ValorEntradajNumberFormatField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2KeyReleased
+        try {
+            nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
+            nValue = nfValue.parse(ValorBemjNumberFormatField.getText());
+            nOldInputValue = nfOldIputValue.parse(ValorFinanciarNumberFormatField3.getText());
+        } catch (ParseException ex) {
+            //JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
+            System.out.println(ex.getMessage());
+        }
+        DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+        Double entrada = nInputValue.doubleValue();
+        Double financiamento = nValue.doubleValue();
+//        if (entrada > financiamento) {
+//            JOptionPane.showMessageDialog(this, "Valor da entrada é maior ou igual ao Financiamento!", "Atenção!", 2);
+//            Double aux = nOldInputValue.doubleValue();
+//            ValorFinanciarNumberFormatField3.setText("");
+//            ValorEntradajNumberFormatField2.setText("");
+//            ValorBemjNumberFormatField.setText("");
+//            entrada = 0d;
+//            financiamento = 0d;
+//            
+//        }
+        Double realValue = financiamento - entrada;
+        ValorFinanciarNumberFormatField3.setText(String.valueOf(decFormat.format(realValue)));
+    }//GEN-LAST:event_ValorEntradajNumberFormatField2KeyReleased
+
+    private void ValorBemjNumberFormatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyPressed
+        
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyPressed
+
+    private void ValorBemjNumberFormatFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyTyped
+        
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyTyped
+
+    private void ValorEntradajNumberFormatField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2FocusGained
+      
+    }//GEN-LAST:event_ValorEntradajNumberFormatField2FocusGained
 
     /**
      * @param args the command line arguments
@@ -631,13 +637,13 @@ public class Main extends javax.swing.JFrame {
                 new Main().setVisible(true);
             }
         });
+        
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JurosjTextField;
     private javax.swing.JTextField TotalParcelasjTextField;
-    private br.com.lojaoriodopeixe.vg.calc.utils.JNumberFormatField ValorBemjNumberFormatField;
-    private br.com.lojaoriodopeixe.vg.calc.utils.JNumberFormatField ValorEntradajNumberFormatField2;
+    private javax.swing.JTextField ValorBemjNumberFormatField;
+    private javax.swing.JTextField ValorEntradajNumberFormatField2;
     private br.com.lojaoriodopeixe.vg.calc.utils.JNumberFormatField ValorFinanciarNumberFormatField3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
