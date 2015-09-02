@@ -1,7 +1,7 @@
 package br.com.lojaoriodopeixe.vg.calc.viewer;
 
 import br.com.lojaoriodopeixe.vg.calc.implementations.Financing;
-import br.com.lojaoriodopeixe.vg.calc.implementations.FuncTableModel;
+import br.com.lojaoriodopeixe.vg.calc.utils.ParcTableModel;
 import br.com.lojaoriodopeixe.vg.calc.implementations.Parcela;
 import br.com.lojaoriodopeixe.vg.calc.utils.DecimalFormattedField;
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
@@ -25,7 +25,7 @@ import javax.swing.table.TableCellRenderer;
  */
 public class Main extends javax.swing.JFrame {
 
-    FuncTableModel f = new FuncTableModel();
+    ParcTableModel f = new ParcTableModel();
     Locale locBrazil = new Locale("pt", "BR");
     NumberFormat nfValue = NumberFormat.getInstance(locBrazil);
     NumberFormat nfInterest = NumberFormat.getInstance(locBrazil);
@@ -49,6 +49,7 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         util.centerWindow(this);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/mono.png")));
+        this.getContentPane().setBackground(Color.getHSBColor(0,0,10)); 
     }
     Utils util = new Utils();
     
@@ -155,12 +156,19 @@ public class Main extends javax.swing.JFrame {
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setResizable(false);
 
+                jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
                 jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
                 jLabel1.setText("Valor do Bem R$");
 
                 TotalParcelasjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                 TotalParcelasjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
                 TotalParcelasjTextField.setToolTipText("");
+                TotalParcelasjTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusGained(java.awt.event.FocusEvent evt) {
+                        TotalParcelasjTextFieldFocusGained(evt);
+                    }
+                });
                 TotalParcelasjTextField.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         TotalParcelasjTextFieldActionPerformed(evt);
@@ -178,6 +186,11 @@ public class Main extends javax.swing.JFrame {
                 JurosjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                 JurosjTextField.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
                 JurosjTextField.setPreferredSize(new java.awt.Dimension(6, 26));
+                JurosjTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+                    public void focusGained(java.awt.event.FocusEvent evt) {
+                        JurosjTextFieldFocusGained(evt);
+                    }
+                });
                 JurosjTextField.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         JurosjTextFieldActionPerformed(evt);
@@ -481,6 +494,11 @@ public class Main extends javax.swing.JFrame {
             }
             f.limpar();
             f.addListaDeParcelas(parcelas);
+            this.ValorBemjNumberFormatField.setText("");
+            this.ValorEntradajNumberFormatField2.setText("");
+            this.TotalParcelasjTextField.setText("");
+            this.JurosjTextField.setText("");
+            this.ValorBemjNumberFormatField.requestFocusInWindow();
         } catch (ParseException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Um ou mais valores não informados ou incompatíveis!", "Atenção!", 2);
             System.out.println(ex.getMessage());
@@ -523,17 +541,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void ValorBemjNumberFormatFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldActionPerformed
-        this.ValorEntradajNumberFormatField2.requestFocusInWindow();
-        this.ValorEntradajNumberFormatField2.setText("");
-    }//GEN-LAST:event_ValorBemjNumberFormatFieldActionPerformed
-
-    private void ValorBemjNumberFormatFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldFocusGained
-        
-    }//GEN-LAST:event_ValorBemjNumberFormatFieldFocusGained
-
-    private void ValorBemjNumberFormatFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyReleased
-    ValorEntradajNumberFormatField2.setText("");
-        try {
+            try {
             nInputValue = nfIputValue.parse(ValorBemjNumberFormatField.getText());
             nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
         } catch (ParseException ex) {
@@ -550,15 +558,21 @@ public class Main extends javax.swing.JFrame {
         }
         
         ValorFinanciarNumberFormatField3.setText("");
-        ValorFinanciarNumberFormatField3.setText(String.valueOf(realValue).replace(",", "."));  
-        System.out.println("SSSSSSS: " +String.valueOf(realValue).replace(",", "."));
+        ValorFinanciarNumberFormatField3.setText(String.valueOf(realValue).replace(",", "."));           
+        this.ValorEntradajNumberFormatField2.requestFocusInWindow();
+        this.ValorEntradajNumberFormatField2.setText("");
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldActionPerformed
+
+    private void ValorBemjNumberFormatFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldFocusGained
+        ValorBemjNumberFormatField.setText("");
+        ValorBemjNumberFormatField.selectAll();
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldFocusGained
+
+    private void ValorBemjNumberFormatFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyReleased
+       
     }//GEN-LAST:event_ValorBemjNumberFormatFieldKeyReleased
 
     private void ValorEntradajNumberFormatField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2ActionPerformed
-        this.TotalParcelasjTextField.requestFocusInWindow();
-    }//GEN-LAST:event_ValorEntradajNumberFormatField2ActionPerformed
-
-    private void ValorEntradajNumberFormatField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2KeyReleased
     Double realValue = 0d;   
         try {
             nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
@@ -585,7 +599,12 @@ public class Main extends javax.swing.JFrame {
         if (entrada > 0) {
         realValue = financiamento - entrada;        
         ValorFinanciarNumberFormatField3.setText(String.valueOf(realValue));
-        }
+        }        
+        this.TotalParcelasjTextField.requestFocusInWindow();
+    }//GEN-LAST:event_ValorEntradajNumberFormatField2ActionPerformed
+
+    private void ValorEntradajNumberFormatField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorEntradajNumberFormatField2KeyReleased
+
     }//GEN-LAST:event_ValorEntradajNumberFormatField2KeyReleased
 
     private void ValorBemjNumberFormatFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyPressed
@@ -603,6 +622,17 @@ public class Main extends javax.swing.JFrame {
     private void ValorFinanciarNumberFormatField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ValorFinanciarNumberFormatField3ActionPerformed
         this.jButton1.requestFocusInWindow();
     }//GEN-LAST:event_ValorFinanciarNumberFormatField3ActionPerformed
+
+    private void TotalParcelasjTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TotalParcelasjTextFieldFocusGained
+        this.TotalParcelasjTextField.setText("");
+        this.TotalParcelasjTextField.selectAll();
+    }//GEN-LAST:event_TotalParcelasjTextFieldFocusGained
+
+    private void JurosjTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JurosjTextFieldFocusGained
+        DecimalFormattedField d = new DecimalFormattedField(DecimalFormattedField.PORCENTAGEM);
+        JurosjTextField.setText("");
+        JurosjTextField.selectAll();
+    }//GEN-LAST:event_JurosjTextFieldFocusGained
 
     /**
      * @param args the command line arguments

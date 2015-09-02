@@ -32,9 +32,8 @@ public class DecimalFormattedField extends JFormattedTextField {
     private String oldValue = "0.00";  
       
     /**String que será exibida em caso de valor inválido ou fora do formato*/  
-    public static final String ERRO = "Valor inválido";  
+    public static final String ERRO = "Valor inválido"; 
       
-  
     /** 
      * Cria um novo objeto DecimalFormattedField, com o formato especificado 
      *  
@@ -95,8 +94,8 @@ public class DecimalFormattedField extends JFormattedTextField {
     }  
   
     /**Verifica se o valor digitado é válido, e insere os novos valores*/  
-    public void thisFocusLost(FocusEvent evt) {  
-        String valor = getText().replace(',', '.');  
+    public void thisFocusLost(FocusEvent evt) {          
+        String valor = getText().replace(',', '.').replace("%", "");  
         if (!valor.equals("") && !valor.trim().isEmpty()) {  
             oldValue = valor;  
         }  

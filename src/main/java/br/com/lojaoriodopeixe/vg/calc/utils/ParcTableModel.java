@@ -1,5 +1,6 @@
-package br.com.lojaoriodopeixe.vg.calc.implementations;
+package br.com.lojaoriodopeixe.vg.calc.utils;
 
+import br.com.lojaoriodopeixe.vg.calc.implementations.Parcela;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -9,7 +10,7 @@ import javax.swing.table.AbstractTableModel;
  * 
  * @author Eric Yuzo
  */
-public class FuncTableModel extends AbstractTableModel {
+public class ParcTableModel extends AbstractTableModel {
     /* Lista de Sócios que representam as linhas. */
     private List<Parcela> linhas;
 
@@ -19,13 +20,13 @@ public class FuncTableModel extends AbstractTableModel {
 
 
     /* Cria um FuncionarioTableModel vazio. */
-    public FuncTableModel() {
+    public ParcTableModel() {
         linhas = new ArrayList<Parcela>();
     }
 
     /* Cria um FuncionarioTableModel carregado com
      * a lista de sócios especificada. */
-    public FuncTableModel(List<Parcela> listaDeParcelas) {
+    public ParcTableModel(List<Parcela> listaDeParcelas) {
         linhas = new ArrayList<Parcela>(listaDeParcelas);
     }
 
