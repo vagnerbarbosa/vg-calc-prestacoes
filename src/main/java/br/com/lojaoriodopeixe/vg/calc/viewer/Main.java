@@ -7,10 +7,8 @@ import br.com.lojaoriodopeixe.vg.calc.utils.DecimalFormattedField;
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 
