@@ -1,14 +1,20 @@
 package br.com.lojaoriodopeixe.vg.calc.utils;
 
-
-
 import java.awt.AWTKeyStroke;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
+import java.awt.Transparency;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashSet;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
@@ -59,12 +65,26 @@ public class Utils {
         conj.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
         frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
     }
-    
+
     public void nextFieldWithEnter2(JTextField frame) {
         // Colocando enter para pular de campo
         HashSet conj = new HashSet(frame.getFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS));
         conj.add(AWTKeyStroke.getAWTKeyStroke(KeyEvent.VK_ENTER, 0));
         frame.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, conj);
-    }    
+    }
+
+    public Image getAImage(String ref) {
+        BufferedImage sourceImage = null;
+
+        try {
+            URL url = this.getClass().getClassLoader().getResource(ref);
+            sourceImage = ImageIO.read(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+        Image image = gc.createCompatibleImage(sourceImage.getWidth(), sourceImage.getHeight(), Transparency.BITMASK);
+        return image;
+    }
 
 }

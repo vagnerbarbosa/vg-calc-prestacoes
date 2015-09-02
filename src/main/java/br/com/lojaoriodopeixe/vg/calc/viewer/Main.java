@@ -7,7 +7,10 @@ import br.com.lojaoriodopeixe.vg.calc.utils.DecimalFormattedField;
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 
@@ -39,17 +43,18 @@ public class Main extends javax.swing.JFrame {
     Double inputValue = 0d;
     Integer months = 0;
     Double interest = 0d;
-    Double value = 0d;
-
+    Double value = 0d;    
+    
     /**
      * Creates new form Main
      */
     public Main() {
         initComponents();
-        util.centerWindow(this);        
+        util.centerWindow(this);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/mono.png")));
     }
     Utils util = new Utils();
-
+    
     public int exitSystem() {
         if (javax.swing.JOptionPane.showConfirmDialog(this, "Tem certeza que deseja sair?", "Calculadora de Prestações", javax.swing.JOptionPane.YES_NO_OPTION) == 0) {
             this.dispose();
@@ -95,7 +100,7 @@ public class Main extends javax.swing.JFrame {
                     // altera a cor de background da linha para vermelho e foreground para branco
                     // quando o valor da coluna 3 for igual a fechado
                     if (jTable3.getValueAt(rowIndex, 0).toString().equals(months + "ª Parcela")) {
-                        c.setBackground(new Color(192, 0, 0));
+                        c.setBackground(new Color(0, 192, 192));
                         c.setForeground(Color.white);
                     } else {
                         // mantem a cor padrão de foreground
@@ -115,7 +120,7 @@ public class Main extends javax.swing.JFrame {
                     if (jTable3.getValueAt(rowIndex, 0).toString().equals("0" + months + "ª Parcela"
 
                     )) {
-                        c.setBackground(new Color(192, 0, 0));
+                        c.setBackground(new Color(0, 192, 192));
                         c.setForeground(Color.white);
                     }else {
                         // mantem a cor padrão de foreground
@@ -150,6 +155,7 @@ public class Main extends javax.swing.JFrame {
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
                 setTitle("Cálculo de Prestações (Financiamento)");
                 setAlwaysOnTop(true);
+                setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setResizable(false);
 
                 jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -302,6 +308,8 @@ public class Main extends javax.swing.JFrame {
                     }
                 });
 
+                ValorFinanciarNumberFormatField3.setEditable(false);
+                ValorFinanciarNumberFormatField3.setBackground(new java.awt.Color(255, 255, 255));
                 ValorFinanciarNumberFormatField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                 ValorFinanciarNumberFormatField3.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -543,7 +551,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             realValue = bem;
         }
-        DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+        
         ValorFinanciarNumberFormatField3.setText("");
         ValorFinanciarNumberFormatField3.setText(String.valueOf(realValue).replace(",", "."));  
         System.out.println("SSSSSSS: " +String.valueOf(realValue).replace(",", "."));
@@ -615,15 +623,11 @@ public class Main extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
