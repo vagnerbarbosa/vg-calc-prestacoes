@@ -98,7 +98,7 @@ public class Main extends javax.swing.JFrame {
                     // altera a cor de background da linha para vermelho e foreground para branco
                     // quando o valor da coluna 3 for igual a fechado
                     if (jTable3.getValueAt(rowIndex, 0).toString().equals(months + "ª Parcela")) {
-                        c.setBackground(new Color(0, 192, 192));
+                        c.setBackground(new Color(192, 0, 0));
                         c.setForeground(Color.white);
                     } else {
                         // mantem a cor padrão de foreground
@@ -118,7 +118,7 @@ public class Main extends javax.swing.JFrame {
                     if (jTable3.getValueAt(rowIndex, 0).toString().equals("0" + months + "ª Parcela"
 
                     )) {
-                        c.setBackground(new Color(0, 192, 192));
+                        c.setBackground(new Color(192, 0, 0));
                         c.setForeground(Color.white);
                     }else {
                         // mantem a cor padrão de foreground
@@ -156,9 +156,10 @@ public class Main extends javax.swing.JFrame {
                 setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
                 setResizable(false);
 
-                jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+                jPanel1.setBackground(new java.awt.Color(153, 153, 153));
 
                 jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel1.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel1.setText("Valor do Bem R$");
 
                 TotalParcelasjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -181,6 +182,7 @@ public class Main extends javax.swing.JFrame {
                 });
 
                 jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel2.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel2.setText("Total de Parcelas");
 
                 JurosjTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -203,6 +205,7 @@ public class Main extends javax.swing.JFrame {
                 });
 
                 jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel3.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel3.setText("Juros ao Mês");
 
                 jTextField3.setEditable(false);
@@ -212,23 +215,36 @@ public class Main extends javax.swing.JFrame {
                 jTextField3.setFocusable(false);
 
                 jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel4.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel4.setText("CET* a.a. %");
 
                 jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel5.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel5.setText("Valor da Entrada R$");
 
                 jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel6.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel6.setText("Valor a Financiar R$");
 
                 jButton1.setBackground(new java.awt.Color(51, 102, 255));
+                jButton1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
                 jButton1.setLabel("OK");
                 jButton1.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jButton1ActionPerformed(evt);
                     }
                 });
+                jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+                    public void keyPressed(java.awt.event.KeyEvent evt) {
+                        jButton1KeyPressed(evt);
+                    }
+                    public void keyReleased(java.awt.event.KeyEvent evt) {
+                        jButton1KeyReleased(evt);
+                    }
+                });
 
                 jButton2.setBackground(new java.awt.Color(255, 51, 51));
+                jButton2.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
                 jButton2.setLabel("Sair");
                 jButton2.setMaximumSize(new java.awt.Dimension(47, 23));
                 jButton2.setMinimumSize(new java.awt.Dimension(47, 23));
@@ -240,6 +256,7 @@ public class Main extends javax.swing.JFrame {
                 });
 
                 jNumberFormatField4.setEditable(false);
+                jNumberFormatField4.setBackground(new java.awt.Color(235, 235, 235));
                 jNumberFormatField4.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
                 jNumberFormatField4.setText("jNumberFormatField1");
                 jNumberFormatField4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -250,9 +267,11 @@ public class Main extends javax.swing.JFrame {
                 });
 
                 jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel7.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel7.setText("Valor da Entrada Desejada R$");
 
                 jNumberFormatField5.setEditable(false);
+                jNumberFormatField5.setBackground(new java.awt.Color(235, 235, 235));
                 jNumberFormatField5.setForeground(javax.swing.UIManager.getDefaults().getColor("Button.background"));
                 jNumberFormatField5.setText("jNumberFormatField1");
                 jNumberFormatField5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -263,10 +282,12 @@ public class Main extends javax.swing.JFrame {
                 });
 
                 jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+                jLabel8.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel8.setText("Valor da Parcela Desejada R$");
 
                 jButton3.setBackground(new java.awt.Color(51, 153, 0));
-                jButton3.setText("Calculo Reverso");
+                jButton3.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+                jButton3.setText("Cálculo Reverso");
                 jButton3.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         jButton3ActionPerformed(evt);
@@ -275,6 +296,7 @@ public class Main extends javax.swing.JFrame {
 
                 jTable3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
                 jTable3.setModel(f);
+                jTable3.setGridColor(new java.awt.Color(255, 255, 255));
                 jTable3.setRowHeight(23);
                 jScrollPane3.setViewportView(jTable3);
 
@@ -321,6 +343,7 @@ public class Main extends javax.swing.JFrame {
                 ValorFinanciarNumberFormatField3.setEditable(false);
                 ValorFinanciarNumberFormatField3.setBackground(new java.awt.Color(255, 255, 255));
                 ValorFinanciarNumberFormatField3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                ValorFinanciarNumberFormatField3.setFocusable(false);
                 ValorFinanciarNumberFormatField3.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         ValorFinanciarNumberFormatField3ActionPerformed(evt);
@@ -462,49 +485,6 @@ public class Main extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Função ainda não implementada. Desculpe o Transtorno!", "Oh não!", 1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
-            nInterest = nfInterest.parse(JurosjTextField.getText());
-            nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
-
-            value = nValue.doubleValue();
-            interest = nInterest.doubleValue();
-            months = Integer.parseInt(TotalParcelasjTextField.getText());
-            inputValue = nInputValue.doubleValue();
-
-            List<Parcela> parcelas = new ArrayList<>();
-
-            //System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
-
-            for (int i = 0; i < months * 2; ++i) {
-                Parcela parcela = new Parcela();
-                if (i > 1) {
-                    DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
-                    if (i < 10) {
-                        parcela.setNumero("0" + i + "ª Parcela");
-                    } else {
-                        parcela.setNumero(i + "ª Parcela");
-                    }
-                    parcela.setParcela(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d))));
-                    parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(inputValue)))));
-                    parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
-                    parcelas.add(parcela);
-                } 
-            }
-            f.limpar();
-            f.addListaDeParcelas(parcelas);
-            this.ValorBemjNumberFormatField.setText("");
-            this.ValorEntradajNumberFormatField2.setText("");
-            this.TotalParcelasjTextField.setText("");
-            this.JurosjTextField.setText("");
-            this.ValorBemjNumberFormatField.requestFocusInWindow();
-        } catch (ParseException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Um ou mais valores não informados ou incompatíveis!", "Atenção!", 2);
-            System.out.println(ex.getMessage());
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void TotalParcelasjTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TotalParcelasjTextFieldKeyTyped
         String caracteres = "0987654321";
         if (!caracteres.contains(evt.getKeyChar() + "")) {
@@ -517,7 +497,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_TotalParcelasjTextFieldActionPerformed
 
     private void JurosjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JurosjTextFieldActionPerformed
-        this.jButton1.requestFocusInWindow();
+        this.jButton1.requestFocusInWindow();        
     }//GEN-LAST:event_JurosjTextFieldActionPerformed
 
     private void JurosjTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JurosjTextFieldKeyReleased
@@ -580,9 +560,8 @@ public class Main extends javax.swing.JFrame {
             //nOldInputValue = nfOldIputValue.parse(ValorFinanciarNumberFormatField3.getText());
         } catch (ParseException ex) {
             //JOptionPane.showMessageDialog(this, "Valor informado não é compativel!", "Atenção!", 2);
-            System.out.println(ex.getMessage());
-        }
-        DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+            System.out.println("Aqui?" + ex.getMessage());
+        }        
         Double entrada = nInputValue.doubleValue();
         Double financiamento = nValue.doubleValue();
 //        if (entrada > financiamento) {
@@ -634,6 +613,96 @@ public class Main extends javax.swing.JFrame {
         JurosjTextField.selectAll();
     }//GEN-LAST:event_JurosjTextFieldFocusGained
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
+            nInterest = nfInterest.parse(JurosjTextField.getText());
+            nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
+
+            value = nValue.doubleValue();
+            interest = nInterest.doubleValue();
+            months = Integer.parseInt(TotalParcelasjTextField.getText());
+            inputValue = nInputValue.doubleValue();
+
+            List<Parcela> parcelas = new ArrayList<>();
+
+            //System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
+
+            for (int i = 0; i < months * 2; ++i) {
+                Parcela parcela = new Parcela();
+                if (i > 1) {
+                    DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+                    if (i < 10) {
+                        parcela.setNumero("0" + i + "ª Parcela");
+                    } else {
+                        parcela.setNumero(i + "ª Parcela");
+                    }
+                    parcela.setParcela(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d))));
+                    parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(inputValue)))));
+                    parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
+                    parcelas.add(parcela);
+                }
+            }
+            f.limpar();
+            f.addListaDeParcelas(parcelas);
+            this.ValorBemjNumberFormatField.setText("");
+            this.ValorEntradajNumberFormatField2.setText("");
+            this.TotalParcelasjTextField.setText("");
+            this.JurosjTextField.setText("");
+            this.ValorBemjNumberFormatField.requestFocusInWindow();
+        } catch (ParseException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Um ou mais valores não informados ou incompatíveis!", "Atenção!", 2);
+            System.out.println(ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyReleased
+
+    private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
+        try {
+            nValue = nfValue.parse(ValorFinanciarNumberFormatField3.getText());
+            nInterest = nfInterest.parse(JurosjTextField.getText());
+            nInputValue = nfIputValue.parse(ValorEntradajNumberFormatField2.getText());
+
+            value = nValue.doubleValue();
+            interest = nInterest.doubleValue();
+            months = Integer.parseInt(TotalParcelasjTextField.getText());
+            inputValue = nInputValue.doubleValue();
+
+            List<Parcela> parcelas = new ArrayList<>();
+
+            //System.out.println("Resultado: " + c.getInstalment(value, interest, months, 0d));
+
+            for (int i = 0; i < months * 2; ++i) {
+                Parcela parcela = new Parcela();
+                if (i > 1) {
+                    DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
+                    if (i < 10) {
+                        parcela.setNumero("0" + i + "ª Parcela");
+                    } else {
+                        parcela.setNumero(i + "ª Parcela");
+                    }
+                    parcela.setParcela(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d))));
+                    parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(inputValue)))));
+                    parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
+                    parcelas.add(parcela);
+                }
+            }
+            f.limpar();
+            f.addListaDeParcelas(parcelas);
+            this.ValorBemjNumberFormatField.setText("");
+            this.ValorEntradajNumberFormatField2.setText("");
+            this.TotalParcelasjTextField.setText("");
+            this.JurosjTextField.setText("");
+            this.ValorBemjNumberFormatField.requestFocusInWindow();
+        } catch (ParseException | NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Um ou mais valores não informados ou incompatíveis!", "Atenção!", 2);
+            System.out.println("Aqui?" + ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton1KeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -645,7 +714,7 @@ public class Main extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

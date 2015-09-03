@@ -5,6 +5,7 @@
  */
 package br.com.lojaoriodopeixe.vg.calc.implementations;
 
+import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,7 +19,11 @@ public class Appteste {
     
     public static void main(String[] args) throws ParseException {
         Financing c = new Financing();
-        System.out.println(c.getRealCET(2.92));
+//        System.out.println(c.getRealCET(2.92));
+
+        Utils u = new Utils();
+        System.out.println(u.Moeda("1.1561,58"));
+
         
       
         //double resultado = c.getInstalment(1200.0, 3.0, 2, 1180.0);

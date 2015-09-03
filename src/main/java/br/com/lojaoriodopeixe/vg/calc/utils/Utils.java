@@ -13,7 +13,11 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.HashSet;
+import java.util.Locale;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -86,5 +90,18 @@ public class Utils {
         Image image = gc.createCompatibleImage(sourceImage.getWidth(), sourceImage.getHeight(), Transparency.BITMASK);
         return image;
     }
+    
+    public String Moeda(String valor) {
+        try {
+            DecimalFormatSymbols dfs = new DecimalFormatSymbols(new Locale("pt", "BR"));
+            DecimalFormat df2 = new DecimalFormat("#,##0.00", dfs);
+            double d = df2.parse(valor).doubleValue();
+            valor = Double.toString(d); // resultado: 1234567.89 
+        } catch (ParseException ex) {
+            System.out.println("OPA! TEMOS UM PROBLEMA AQUI >>>>>>" + ex.getMessage());
+        }
+
+        return valor;
+    }    
 
 }
