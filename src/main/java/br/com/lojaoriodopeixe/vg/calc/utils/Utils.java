@@ -94,14 +94,14 @@ public class Utils {
     public String Moeda(String valor) {
         try {
             DecimalFormatSymbols dfs = new DecimalFormatSymbols(new Locale("pt", "BR"));
-            DecimalFormat df2 = new DecimalFormat("#,##0.00", dfs);
+            DecimalFormat df2 = new DecimalFormat("#,##0.00;-#,##0.00", dfs);
             double d = df2.parse(valor).doubleValue();
             valor = Double.toString(d); // resultado: 1234567.89 
         } catch (ParseException ex) {
-            System.out.println("OPA! TEMOS UM PROBLEMA AQUI >>>>>>" + ex.getMessage());
+            //System.out.println("OPA! TEMOS UM PROBLEMA AQUI >>>>>>" + ex.getMessage());
         }
 
         return valor;
-    }    
+    }   
 
 }

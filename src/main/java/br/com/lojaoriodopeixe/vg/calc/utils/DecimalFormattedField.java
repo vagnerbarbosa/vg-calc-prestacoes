@@ -120,8 +120,8 @@ public class DecimalFormattedField extends JFormattedTextField {
      * Verifica se o valor digitado é válido, e insere os novos valores
      */
     public void thisFocusLost(FocusEvent evt) {
-        String valor = getText().replace(',', '.').replace("%", "");
-  
+        String valor = this.Moeda(getText().replace("%", ""));
+        System.out.println("O valor em thisFocusLost é: " + valor);
         if (!valor.equals("") && !valor.trim().isEmpty()) {
             oldValue = valor;
         }
@@ -230,11 +230,11 @@ public class DecimalFormattedField extends JFormattedTextField {
     public String Moeda(String valor) {
         try {
             DecimalFormatSymbols dfs = new DecimalFormatSymbols(new Locale("pt", "BR"));
-            DecimalFormat df2 = new DecimalFormat("#,##0.00", dfs);
+            DecimalFormat df2 = new DecimalFormat(NUMERO, dfs);
             double d = df2.parse(valor).doubleValue();
             valor = Double.toString(d); // resultado: 1234567.89 
         } catch (ParseException ex) {
-            System.out.println("OPA! TEMOS UM PROBLEMA AQUI >>>>>>" + ex.getMessage());
+            //System.out.println("OPA! TEMOS UM PROBLEMA AQUI >>>>>>" + ex.getMessage());
         }
 
         return valor;

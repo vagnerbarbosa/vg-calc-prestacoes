@@ -305,6 +305,9 @@ public class Main extends javax.swing.JFrame {
                     public void focusGained(java.awt.event.FocusEvent evt) {
                         ValorBemjNumberFormatFieldFocusGained(evt);
                     }
+                    public void focusLost(java.awt.event.FocusEvent evt) {
+                        ValorBemjNumberFormatFieldFocusLost(evt);
+                    }
                 });
                 ValorBemjNumberFormatField.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -538,14 +541,14 @@ public class Main extends javax.swing.JFrame {
         }
         
         ValorFinanciarNumberFormatField3.setText("");
-        ValorFinanciarNumberFormatField3.setText(String.valueOf(realValue).replace(",", "."));           
+        System.out.println("O valor do ActionPerformed é: " + realValue);
+        ValorFinanciarNumberFormatField3.setText(String.valueOf(realValue));           
         this.ValorEntradajNumberFormatField2.requestFocusInWindow();
         this.ValorEntradajNumberFormatField2.setText("");
     }//GEN-LAST:event_ValorBemjNumberFormatFieldActionPerformed
 
     private void ValorBemjNumberFormatFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldFocusGained
-        ValorBemjNumberFormatField.setText("");
-        ValorBemjNumberFormatField.selectAll();
+        
     }//GEN-LAST:event_ValorBemjNumberFormatFieldFocusGained
 
     private void ValorBemjNumberFormatFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldKeyReleased
@@ -702,6 +705,10 @@ public class Main extends javax.swing.JFrame {
             System.out.println("Aqui?" + ex.getMessage());
         }
     }//GEN-LAST:event_jButton1KeyPressed
+
+    private void ValorBemjNumberFormatFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ValorBemjNumberFormatFieldFocusLost
+        
+    }//GEN-LAST:event_ValorBemjNumberFormatFieldFocusLost
 
     /**
      * @param args the command line arguments
