@@ -4,12 +4,9 @@ import java.awt.Color;
 import javax.swing.*;
 import java.text.*;
 import java.awt.event.*;
-import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Currency;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Classe para criar campos formatados com valores em decimal Tanto para valores

@@ -1,8 +1,6 @@
 package br.com.lojaoriodopeixe.vg.calc.implementations;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,6 +37,13 @@ public class Financing {
         BigDecimal preciseValue = new BigDecimal(realValue);
         return preciseValue.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
+    
+    public BigDecimal getReverseInstalment(Double value, Double interest, Integer months, Double inputValue) {
+        double realValue = value - inputValue;        
+        realValue = (realValue * interest)/(1-(Math.pow(1/(1+interest), months)));
+        BigDecimal preciseValue = new BigDecimal(realValue);
+        return preciseValue.setScale(2, BigDecimal.ROUND_HALF_UP);
+    }    
     
     public BigDecimal getRealCET(double interest) {
         double result = 0;

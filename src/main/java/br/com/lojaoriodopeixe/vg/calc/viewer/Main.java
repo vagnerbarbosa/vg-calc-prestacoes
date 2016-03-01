@@ -20,8 +20,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableCellRenderer;
 
 /**
+ * Classe GUI Principal da Calculadora.
  *
- * @author vagner
+ * @author Vagner Barbosa (contato@vagnerbarbosa.com)
+ *
+ * @since 07/09/2015
+ *
+ * @version 1.0
  */
 public class Main extends javax.swing.JFrame {
 
@@ -633,7 +638,7 @@ public class Main extends javax.swing.JFrame {
 
             for (int i = 0; i < months * 2; ++i) {
                 Parcela parcela = new Parcela();
-                if (i > 1) {
+                if (i > 0) {
                     DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
                     if (i < 10) {
                         parcela.setNumero("0" + i + "ª Parcela");
@@ -644,6 +649,8 @@ public class Main extends javax.swing.JFrame {
                     parcela.setTotalParcelado(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(inputValue)))));
                     parcela.setTotalGeral(String.valueOf(decFormat.format(c.getInstalment(value, interest, i, 0d).multiply(new BigDecimal(i)).add(new BigDecimal(0d)))));
                     parcelas.add(parcela);
+                } else {
+                    //JOptionPane.showMessageDialog(this, "Um ou mais valores não informados ou incompatíveis!", "Atenção!", 2);
                 }
             }
             f.limpar();
@@ -680,7 +687,7 @@ public class Main extends javax.swing.JFrame {
 
             for (int i = 0; i < months * 2; ++i) {
                 Parcela parcela = new Parcela();
-                if (i > 1) {
+                if (i > 0) {
                     DecimalFormat decFormat = new DecimalFormat("¤ #,###,##0.00");
                     if (i < 10) {
                         parcela.setNumero("0" + i + "ª Parcela");

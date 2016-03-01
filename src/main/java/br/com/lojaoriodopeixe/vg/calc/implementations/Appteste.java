@@ -1,15 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.lojaoriodopeixe.vg.calc.implementations;
 
 import br.com.lojaoriodopeixe.vg.calc.utils.Utils;
-import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 /**
  *
@@ -22,7 +14,7 @@ public class Appteste {
 //        System.out.println(c.getRealCET(2.92));
 
         Utils u = new Utils();
-        System.out.println(u.Moeda("1.1561,58"));
+       // System.out.println(u.Moeda("1.1561,58"));
 
         
       
@@ -39,7 +31,7 @@ public class Appteste {
 //        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 //        System.out.println(c.getCET(51516.515168d, 0.05d, 24, df.parse("01/01/2012"), df.parse("01/02/2012")));
         
-        
+        System.out.println(":::::: " + c.getReverseInstalment(1000.00d, 1.0, 12, 0.0d));
     }
     
 }

@@ -1,8 +1,13 @@
 package br.com.lojaoriodopeixe.vg.calc.implementations;
 
 /**
+ * Classe de entidade Parcela.
  *
- * @author vagner
+ * @author Vagner Barbosa (contato@vagnerbarbosa.com)
+ *
+ * @since 07/09/2015
+ *
+ * @version 0.1
  */
 public class Parcela {
     
