@@ -1,6 +1,5 @@
 # Calculadora para Financiamento de Prestações
 
-Description:
 Calculadora para Financiamento de Prestações com base em juros simples.
 
 ----------------------------------------------------------------------------
